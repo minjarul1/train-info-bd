@@ -98,6 +98,7 @@
         <button class="nav-btn" onclick="showSection('next')">Next Departure</button>
         <button class="nav-btn" onclick="showSection('station')">Station Lookup</button>
         <button class="nav-btn" onclick="showSection('details')">All Details</button>
+        <button class="nav-btn" onclick="showSection('station-details')">Station Details</button>
     </div>
     
     <!-- 7-Day Schedule Section -->
@@ -252,6 +253,60 @@
         </table>
     </div>
     
+    <!-- Station Details Section -->
+    <div id="station-details" class="section">
+        <h2>🚉 Station Details</h2>
+        
+        <h3>Abdulpur Junction (AUP)</h3>
+        <p><strong>District:</strong> Natore | <strong>Division:</strong> Rajshahi | <strong>Opened:</strong> 1878</p>
+        <p><strong>Lines:</strong> Chilahati-Parbatipur-Santahar-Darshana line, Old Malda-Abdulpur line</p>
+        <table>
+            <thead><tr><th style="text-align:left;">Train</th><th>No.</th><th>Towards</th><th>Arrival</th><th>Departure</th><th>Off Day</th></tr></thead>
+            <tbody>
+                <tr><td class="train-name">Sagardari Express</td><td>762</td><td>Khulna</td><td>06:40</td><td>06:42</td><td class="off-day">Monday</td></tr>
+                <tr><td class="train-name">Silkcity Express</td><td>754</td><td>Dhaka</td><td>08:18</td><td>08:18</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Barendra Express</td><td>732</td><td>Rajshahi</td><td>09:55</td><td>10:15</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Kapotaksha Express</td><td>715</td><td>Rajshahi</td><td>11:45</td><td>11:47</td><td class="off-day">Friday</td></tr>
+                <tr><td class="train-name">Barendra Express</td><td>731</td><td>Chilahati</td><td>15:40</td><td>16:00</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Silkcity Express</td><td>753</td><td>Rajshahi</td><td>19:55</td><td>19:55</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Sagardari Express</td><td>761</td><td>Rajshahi</td><td>20:53</td><td>20:56</td><td class="off-day">Monday</td></tr>
+            </tbody>
+        </table>
+        
+        <h3 style="margin-top:30px;">Azim Nagar (AZN)</h3>
+        <p><strong>District:</strong> Pabna | <strong>Division:</strong> Rajshahi | <strong>Type:</strong> Station</p>
+        <table>
+            <thead><tr><th style="text-align:left;">Train</th><th>No.</th><th>Towards</th><th>Arrival</th><th>Departure</th><th>Off Day</th></tr></thead>
+            <tbody>
+                <tr><td class="train-name">Sagardari Express</td><td>762</td><td>Khulna</td><td>06:51</td><td>06:53</td><td class="off-day">Monday</td></tr>
+                <tr><td class="train-name">Kapotaksha Express</td><td>715</td><td>Rajshahi</td><td>11:22</td><td>11:24</td><td class="off-day">Friday</td></tr>
+                <tr><td class="train-name">Kapotaksha Express</td><td>716</td><td>Khulna</td><td>15:16</td><td>15:18</td><td class="off-day">Friday</td></tr>
+                <tr><td class="train-name">Sagardari Express</td><td>761</td><td>Rajshahi</td><td>20:43</td><td>20:45</td><td class="off-day">Monday</td></tr>
+            </tbody>
+        </table>
+        
+        <h3 style="margin-top:30px;">Ishwardi Junction (IRD)</h3>
+        <p><strong>District:</strong> Pabna | <strong>Division:</strong> Rajshahi | <strong>Type:</strong> Major Junction</p>
+        <p><strong>Note:</strong> Key interchange point connecting multiple railway lines</p>
+        <table>
+            <thead><tr><th style="text-align:left;">Train</th><th>No.</th><th>Towards</th><th>Arrival</th><th>Departure</th><th>Off Day</th></tr></thead>
+            <tbody>
+                <tr><td class="train-name">Dhumketu Express</td><td>770</td><td>Dhaka</td><td>00:22</td><td>00:25</td><td class="off-day">Thursday</td></tr>
+                <tr><td class="train-name">Silkcity Express</td><td>754</td><td>Dhaka</td><td>08:37</td><td>08:39</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Madhumati Express</td><td>756</td><td>Dhaka</td><td>07:40</td><td>08:00</td><td class="off-day">Saturday</td></tr>
+                <tr><td class="train-name">Kapotaksha Express</td><td>715</td><td>Rajshahi</td><td>10:50</td><td>11:10</td><td class="off-day">Friday</td></tr>
+                <tr><td class="train-name">Barendra Express</td><td>732</td><td>Rajshahi</td><td>12:30</td><td>12:32</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Barendra Express</td><td>731</td><td>Chilahati</td><td>14:30</td><td>14:32</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Padma Express</td><td>760</td><td>Dhaka</td><td>17:01</td><td>17:03</td><td class="off-day">Tuesday</td></tr>
+                <tr><td class="train-name">Silkcity Express</td><td>753</td><td>Rajshahi</td><td>18:48</td><td>18:51</td><td class="off-day">Sunday</td></tr>
+                <tr><td class="train-name">Madhumati Express</td><td>755</td><td>Rajshahi</td><td>21:05</td><td>21:25</td><td class="off-day">Saturday</td></tr>
+                <tr><td class="train-name">Sagardari Express</td><td>762</td><td>Khulna</td><td>07:10</td><td>07:30</td><td class="off-day">Monday</td></tr>
+                <tr><td class="train-name">Dhumketu Express</td><td>769</td><td>Rajshahi</td><td>10:12</td><td>10:15</td><td class="off-day">Thursday</td></tr>
+                <tr><td class="train-name">Padma Express</td><td>759</td><td>Rajshahi</td><td>02:30</td><td>02:33</td><td class="off-day">Tuesday</td></tr>
+            </tbody>
+        </table>
+    </div>
+
     <div class="info-box">
         <h3>📌 Important Information</h3>
         <ul>

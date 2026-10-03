@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangladesh Railway - Live Train Info</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --rail-green: #0B5D3B;
+            --signal-green: #11824A;
+            --forest-ink: #07281B;
+            --leaf: #BFE3CD;
+            --mint: #E3F4EA;
+            --platform: #F5FAF7;
+            --white: #FFFFFF;
+            --delay-amber: #B45309;
+            --cancel-red: #B3261E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+            background: var(--white);
+            color: var(--forest-ink);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: var(--rail-green);
+            color: var(--white);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 24px;
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        .header-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .header-nav a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--rail-green) 0%, var(--signal-green) 100%);
+            color: var(--white);
+            padding: 64px 24px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        /* Search Section */
+        .search-section {
+            max-width: 1040px;
+            margin: -40px auto 48px;
+            padding: 0 24px;
+        }
+
+        .search-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(11, 93, 59, 0.12);
+            border: 1px var(--leaf);
+        }
+
+        .search-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--forest-ink);
+        }
+
+        .form-group select,
+        .form-group input {
+            padding: 12px 16px;
+            border: 1px solid var(--leaf);
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
+            background: var(--white);
+            color: var(--forest-ink);
+            min-height: 48px;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--rail-green);
+            box-shadow: 0 0 0 3px var(--mint);
+        }
+
+        .search-btn {
+            background: var(--rail-green);
+            color: var(--white);
+            border: none;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .search-btn:hover {
+            background: var(--signal-green);
+        }
+
+        /* Live Board */
+        .live-board {
+            max-width: 1040px;
+            margin: 0 auto 48px;
+            padding: 0 24px;
+        }
+
+        .board-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .board-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--signal-green);
+            font-weight: 500;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--signal-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Train Table */
+        .train-table {
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--leaf);
+            overflow: hidden;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+            padding: 16px 24px;
+            background: var(--platform);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--forest-ink);
+            border-bottom: 1px solid var(--leaf);
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--platform);
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .table-row:hover {
+            background: var(--mint);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .train-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .train-name {
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--forest-ink);
+        }
+
+        .train-number {
+            font-size: 14px;
+            color: var(--rail-green);
+            font-weight: 500;
+        }
+
+        .train-route {
+            font-size: 14px;
+            color: var(--forest-ink);
+            opacity: 0.7;
+        }
+
+        .time-cell {
+            font-size: 24px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .status-on-time {
+            background: var(--mint);
+            color: var(--signal-green);
+        }
+
+        .status-delayed {
+            background: #FEF3C7;
+            color: var(--delay-amber);
+        }
+
+        .status-cancelled {
+            background: #FEE2E2;
+            color: var(--cancel-red);
+        }
+
+        .status-platform-changed {
+            background: #E0E7FF;
+            color: #4338CA;
+        }
+
+        /* Quick Links */
+        .quick-links {
+            max-width: 1040px;
+            margin: 0 auto 48px;
+            padding: 0 24px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .quick-card {
+            background: var(--white);
+            border: 1px solid var(--leaf);
+            border-radius: 12px;
+            padding: 24px;
+            text-decoration: none;
+            color: var(--forest-ink);
+            transition: all 0.2s;
+        }
+
+        .quick-card:hover {
+            background: var(--mint);
+            border-color: var(--signal-green);
+            transform: translateY(-2px);
+        }
+
+        .quick-card i {
+            font-size: 24px;
+            color: var(--rail-green);
+            margin-bottom: 12px;
+        }
+
+        .quick-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .quick-card p {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Disruption Notices */
+        .notices {
+            max-width: 1040px;
+            margin: 0 auto 48px;
+            padding: 0 24px;
+        }
+
+        .notice-card {
+            background: #FEF3C7;
+            border-left: 4px solid var(--delay-amber);
+            padding: 16px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 12px;
+        }
+
+        .notice-card.critical {
+            background: #FEE2E2;
+            border-left-color: var(--cancel-red);
+        }
+
+        .notice-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .notice-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--forest-ink);
+            color: var(--white);
+            padding: 48px 24px;
+            margin-top: 64px;
+        }
+
+        .footer-content {
+            max-width: 1040px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+        }
+
+        .footer-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--leaf);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            max-width: 1040px;
+            margin: 32px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(191, 227, 205, 0.3);
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* Search Results */
+        .search-results {
+            max-width: 1040px;
+            margin: 0 auto 48px;
+            padding: 0 24px;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .result-header {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--forest-ink);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .search-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-header,
+            .table-row {
+                grid-template-columns: 1.5fr 1fr 1fr 100px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .table-header:nth-child(4),
+            .table-row:nth-child(4) {
+                display: none;
+            }
+
+            .time-cell {
+                font-size: 18px;
+            }
+
+            .header-nav {
+                display: none;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        *:focus {
+            outline: 3px solid #FACC15;
+            outline-offset: 2px;
+        }
+
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 48px;
+            color: var(--forest-ink);
+            opacity: 0.6;
+        }
+
+        .loading i {
+            font-size: 32px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-train"></i>
+                <span>Bangladesh Railway</span>
+            </div>
+            <nav class="header-nav">
+                <a href="#search">Search</a>
+                <a href="#live">Live Board</a>
+                <a href="#notices">Notices</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Train Information & Live Status</h1>
+        <p>Find your train, check the platform, see if it is running. Real-time updates for all Bangladesh Railway services.</p>
+    </section>
+
+    <!-- Search -->
+    <section class="search-section" id="search">
+        <div class="search-card">
+            <div class="search-grid">
+                <div class="form-group">
+                    <label for="from">From Station</label>
+                    <select id="from">
+                        <option value="">Select station...</option>
+                        <option value="chapainawabganj">Chapainawabganj</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="abdulpur">Abdulpur</option>
+                        <option value="azimnagar">Azim Nagar</option>
+                        <option value="ishwardi">Ishwardi</option>
+                        <option value="dhaka">Dhaka (Kamalapur)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="to">To Station</label>
+                    <select id="to">
+                        <option value="">Select station...</option>
+                        <option value="chapainawabganj">Chapainawabganj</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="abdulpur">Abdulpur</option>
+                        <option value="azimnagar">Azim Nagar</option>
+                        <option value="ishwardi">Ishwardi</option>
+                        <option value="dhaka">Dhaka (Kamalapur)</option>
+                    </select>
+                </div>
+                <button class="search-btn" onclick="searchTrains()">
+                    <i class="fas fa-search"></i>
+                    Find Trains
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Results -->
+    <section class="search-results" id="searchResults">
+        <h2 class="result-header" id="resultHeader">Trains Found</h2>
+        <div class="train-table" id="resultTable">
+            <div class="table-header">
+                <div>Train</div>
+                <div>Departure</div>
+                <div>Arrival</div>
+                <div>Duration</div>
+                <div>Status</div>
+            </div>
+            <div id="resultRows"></div>
+        </div>
+    </section>
+
+    <!-- Live Board -->
+    <section class="live-board" id="live">
+        <div class="board-header">
+            <h2 class="board-title">
+                <i class="fas fa-clock" style="color: var(--rail-green);"></i>
+                Live Departures
+            </h2>
+            <div class="live-indicator">
+                <span class="live-dot"></span>
+                <span>Live updates</span>
+            </div>
+        </div>
+        <div class="train-table">
+            <div class="table-header">
+                <div>Train</div>
+                <div>Departure</div>
+                <div>Arrival</div>
+                <div>Platform</div>
+                <div>Status</div>
+            </div>
+            <div class="table-row">
+                <div class="train-info">
+                    <span class="train-name">Banalata Express</span>
+                    <span class="train-number">#792</span>
+                    <span class="train-route">Chapainawabganj → Dhaka</span>
+                </div>
+                <div class="time-cell">06:00</div>
+                <div class="time-cell">11:35</div>
+                <div>3</div>
+                <div><span class="status-badge status-on-time"><i class="fas fa-check"></i> On time</span></div>
+            </div>
+            <div class="table-row">
+                <div class="train-info">
+                    <span class="train-name">Silkcity Express</span>
+                    <span class="train-number">#754</span>
+                    <span class="train-route">Rajshahi → Dhaka</span>
+                </div>
+                <div class="time-cell">07:40</div>
+                <div class="time-cell">13:10</div>
+                <div>1</div>
+                <div><span class="status-badge status-on-time"><i class="fas fa-check"></i> On time</span></div>
+            </div>
+            <div class="table-row">
+                <div class="train-info">
+                    <span class="train-name">Sagardari Express</span>
+                    <span class="train-number">#762</span>
+                    <span class="train-route">Rajshahi → Khulna</span>
+                </div>
+                <div class="time-cell">06:00</div>
+                <div class="time-cell">12:10</div>
+                <div>2</div>
+                <div><span class="status-badge status-delayed"><i class="fas fa-clock"></i> Delayed 8 min</span></div>
+            </div>
+            <div class="table-row">
+                <div class="train-info">
+                    <span class="train-name">Padma Express</span>
+                    <span class="train-number">#760</span>
+                    <span class="train-route">Rajshahi → Dhaka</span>
+                </div>
+                <div class="time-cell">16:00</div>
+                <div class="time-cell">21:15</div>
+                <div>4</div>
+                <div><span class="status-badge status-on-time"><i class="fas fa-check"></i> On time</span></div>
+            </div>
+            <div class="table-row">
+                <div class="train-info">
+                    <span class="train-name">Kapota ksha Express</span>
+                    <span class="train-number">#716</span>
+                    <span class="train-route">Rajshahi → Khulna</span>
+                </div>
+                <div class="time-cell">14:30</div>
+                <div class="time-cell">20:25</div>
+                <div>5</div>
+                <div><span class="status-badge status-platform-changed"><i class="fas fa-exchange-alt"></i> Platform changed</span></div>
+            </div>
+            <div class="table-row">
+                <div class="train-info">
+                    <span class="train-name">Dhumketu Express</span>
+                    <span class="train-number">#770</span>
+                    <span class="train-route">Rajshahi → Dhaka</span>
+                </div>
+                <div class="time-cell">23:20</div>
+                <div class="time-cell">04:40</div>
+                <div>2</div>
+                <div><span class="status-badge status-on-time"><i class="fas fa-check"></i> On time</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disruption Notices -->
+    <section class="notices" id="notices">
+        <h2 class="board-title" style="margin-bottom: 20px;">
+            <i class="fas fa-exclamation-triangle" style="color: var(--delay-amber);"></i>
+            Service Notices
+        </h2>
+        <div class="notice-card">
+            <div class="notice-title">Western Line: Delays up to 15 minutes</div>
+            <div class="notice-text">Signal maintenance near Ishwardi. Trains running with reduced speed.</div>
+        </div>
+        <div class="notice-card critical">
+            <div class="notice-title">Chapainawabganj Shuttle: Cancelled today</div>
+            <div class="notice-text">Locomotive issue. Bus replacement arranged between Rajshahi and Chapainawabganj.</div>
+        </div>
+        <div class="notice-card">
+            <div class="notice-title">Weekend schedule in effect</div>
+            <div class="notice-text">Modified timetables apply on Saturdays and Sundays. Check specific train status before travel.</div>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+        <div class="quick-grid">
+            <a href="https://railwayticket.bd" class="quick-card" target="_blank">
+                <i class="fas fa-ticket-alt"></i>
+                <h3>Book Tickets</h3>
+                <p>Buy tickets online 10 days in advance</p>
+            </a>
+            <a href="https://trainkothai.com" class="quick-card" target="_blank">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Live Tracking</h3>
+                <p>Track your train in real-time</p>
+            </a>
+            <a href="tel:16318" class="quick-card">
+                <i class="fas fa-phone"></i>
+                <h3>Helpline 16318</h3>
+                <p>Call for instant assistance</p>
+            </a>
+            <a href="#sms" class="quick-card" onclick="showSmsHelp()">
+                <i class="fas fa-sms"></i>
+                <h3>SMS Status</h3>
+                <p>Send train number to 16318</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Timetable</a></li>
+                    <li><a href="#">Fares</a></li>
+                    <li><a href="#">Station Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="https://railwayticket.bd" target="_blank">Online Booking</a></li>
+                    <li><a href="https://trainkothai.com" target="_blank">Live Tracking</a></li>
+                    <li><a href="#">PNR Status</a></li>
+                    <li><a href="#">Platform Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="tel:16318"><i class="fas fa-phone"></i> Helpline: 16318</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@railway.gov.bd</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Kamalapur, Dhaka</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Official Sites</h4>
+                <ul>
+                    <li><a href="https://railway.gov.bd" target="_blank">Bangladesh Railway</a></li>
+                    <li><a href="https://railwayticket.bd" target="_blank">E-Ticket Portal</a></li>
+                    <li><a href="#">Rail Sheba App</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p> Bangladesh Railway - Connecting the nation since 1862</p>
+            <p style="margin-top: 8px; font-size: 12px;">Information updated regularly. Always verify before travel.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Train database
+        const trains = [
+            {
+                name: "Banalata Express",
+                number: "792",
+                from: "chapainawabganj",
+                to: "dhaka",
+                departure: "06:00",
+                arrival: "11:35",
+                duration: "5h 35m",
+                platform: "3",
+                status: "on-time"
+            },
+            {
+                name: "Banalata Express",
+                number: "791",
+                from: "dhaka",
+                to: "chapainawabganj",
+                departure: "13:30",
+                arrival: "19:15",
+                duration: "5h 45m",
+                platform: "1",
+                status: "on-time"
+            },
+            {
+                name: "Silkcity Express",
+                number: "754",
+                from: "rajshahi",
+                to: "dhaka",
+                departure: "07:40",
+                arrival: "13:10",
+                duration: "5h 30m",
+                platform: "1",
+                status: "on-time"
+            },
+            {
+                name: "Silkcity Express",
+                number: "753",
+                from: "dhaka",
+                to: "rajshahi",
+                departure: "14:30",
+                arrival: "20:20",
+                duration: "5h 50m",
+                platform: "2",
+                status: "on-time"
+            },
+            {
+                name: "Sagardari Express",
+                number: "762",
+                from: "rajshahi",
+                to: "khulna",
+                departure: "06:00",
+                arrival: "12:10",
+                duration: "6h 10m",
+                platform: "2",
+                status: "delayed"
+            },
+            {
+                name: "Sagardari Express",
+                number: "761",
+                from: "khulna",
+                to: "rajshahi",
+                departure: "16:00",
+                arrival: "22:00",
+                duration: "6h 00m",
+                platform: "4",
+                status: "on-time"
+            },
+            {
+                name: "Kapota ksha Express",
+                number: "716",
+                from: "rajshahi",
+                to: "khulna",
+                departure: "14:30",
+                arrival: "20:25",
+                duration: "5h 55m",
+                platform: "5",
+                status: "platform-changed"
+            },
+            {
+                name: "Kapota ksha Express",
+                number: "715",
+                from: "khulna",
+                to: "rajshahi",
+                departure: "12:20",
+                arrival: "15:40",
+                duration: "3h 20m",
+                platform: "3",
+                status: "on-time"
+            },
+            {
+                name: "Padma Express",
+                number: "760",
+                from: "rajshahi",
+                to: "dhaka",
+                departure: "16:00",
+                arrival: "21:15",
+                duration: "5h 15m",
+                platform: "4",
+                status: "on-time"
+            },
+            {
+                name: "Padma Express",
+                number: "759",
+                from: "dhaka",
+                to: "rajshahi",
+                departure: "04:00",
+                arrival: "09:15",
+                duration: "5h 15m",
+                platform: "1",
+                status: "on-time"
+            },
+            {
+                name: "Dhumketu Express",
+                number: "770",
+                from: "rajshahi",
+                to: "dhaka",
+                departure: "23:20",
+                arrival: "04:40",
+                duration: "5h 20m",
+                platform: "2",
+                status: "on-time"
+            },
+            {
+                name: "Madhumati Express",
+                number: "756",
+                from: "rajshahi",
+                to: "dhaka",
+                departure: "06:40",
+                arrival: "14:00",
+                duration: "7h 20m",
+                platform: "3",
+                status: "on-time"
+            },
+            {
+                name: "Chapainawabganj Shuttle",
+                number: "110",
+                from: "chapainawabganj",
+                to: "rajshahi",
+                departure: "14:15",
+                arrival: "15:40",
+                duration: "1h 25m",
+                platform: "1",
+                status: "cancelled"
+            },
+            {
+                name: "Chapainawabganj Shuttle",
+                number: "109",
+                from: "rajshahi",
+                to: "chapainawabganj",
+                departure: "10:35",
+                arrival: "11:50",
+                duration: "1h 15m",
+                platform: "2",
+                status: "on-time"
+            }
+        ];
+
+        function searchTrains() {
+            const from = document.getElementById('from').value;
+            const to = document.getElementById('to').value;
+            const resultsSection = document.getElementById('searchResults');
+            const resultRows = document.getElementById('resultRows');
+            const resultHeader = document.getElementById('resultHeader');
+
+            if (!from || !to) {
+                alert('Please select both From and To stations');
+                return;
+            }
+
+            if (from === to) {
+                alert('Please select different stations');
+                return;
+            }
+
+            // Find matching trains
+            const results = trains.filter(t => 
+                (t.from === from && t.to === to) || 
+                (t.from === to && t.to === from)
+            );
+
+            // Display results
+            resultRows.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultRows.innerHTML = '<div class="loading"><i class="fas fa-train"></i><p>No trains found for this route</p></div>';
+            } else {
+                results.forEach(train => {
+                    const statusClass = train.status === 'on-time' ? 'status-on-time' :
+                                       train.status === 'delayed' ? 'status-delayed' :
+                                       train.status === 'cancelled' ? 'status-cancelled' : 'status-platform-changed';
+                    const statusIcon = train.status === 'on-time' ? 'check' :
+                                      train.status === 'delayed' ? 'clock' :
+                                      train.status === 'cancelled' ? 'times' : 'exchange-alt';
+                    const statusText = train.status === 'on-time' ? 'On time' :
+                                      train.status === 'delayed' ? 'Delayed 8 min' :
+                                      train.status === 'cancelled' ? 'Cancelled' : 'Platform changed';
+                    
+                    const row = document.createElement('div');
+                    row.className = 'table-row';
+                    row.innerHTML = `
+                        <div class="train-info">
+                            <span class="train-name">${train.name}</span>
+                            <span class="train-number">#${train.number}</span>
+                        </div>
+                        <div class="time-cell">${train.departure}</div>
+                        <div class="time-cell">${train.arrival}</div>
+                        <div>${train.duration}</div>
+                        <div><span class="status-badge ${statusClass}"><i class="fas fa-${statusIcon}"></i> ${statusText}</span></div>
+                    `;
+                    resultRows.appendChild(row);
+                });
+            }
+
+            resultHeader.textContent = `Trains from ${getStationName(from)} to ${getStationName(to)}`;
+            resultsSection.classList.add('active');
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function getStationName(code) {
+            const stations = {
+                'chapainawabganj': 'Chapainawabganj',
+                'rajshahi': 'Rajshahi',
+                'abdulpur': 'Abdulpur',
+                'azimnagar': 'Azim Nagar',
+                'ishwardi': 'Ishwardi',
+                'dhaka': 'Dhaka (Kamalapur)',
+                'khulna': 'Khulna'
+            };
+            return stations[code] || code;
+        }
+
+        function showSmsHelp() {
+            alert('Send SMS with train number to 16318\n\nExample: Send "792" to 16318\nReceive: Current location and delay status');
+        }
+
+        // Enter key support
+        document.getElementById('from').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchTrains();
+        });
+        document.getElementById('to').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchTrains();
+        });
+    </script>
+</body>
+</html>

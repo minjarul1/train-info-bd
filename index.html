@@ -7,9 +7,21 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background: #fff; padding: 20px; color: #07281B; }
-        h1 { text-align: center; color: #0B5D3B; margin-bottom: 30px; }
-        .section { background: #fff; margin-bottom: 30px; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        h1 { text-align: center; color: #0B5D3B; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; font-size: 12px; margin-bottom: 20px; }
+        
+        /* Navigation */
+        .nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .nav-btn { padding: 8px 16px; background: #0B5D3B; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; }
+        .nav-btn:hover { background: #094a2e; }
+        .nav-btn.active { background: #11824A; }
+        
+        /* Sections */
+        .section { background: #fff; margin-bottom: 20px; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; display: none; }
+        .section.active { display: block; }
         h2 { color: #0B5D3B; margin-bottom: 15px; font-size: 18px; border-bottom: 2px solid #0B5D3B; padding-bottom: 10px; }
+        
+        /* Tables */
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         th { background: #0B5D3B; color: #fff; padding: 10px 6px; text-align: center; font-weight: bold; font-size: 12px; }
         td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #ddd; }
@@ -19,20 +31,99 @@
         .run-no { color: #ccc; font-size: 16px; }
         .route { text-align: left; font-size: 12px; color: #666; }
         .off-day { color: #B3261E; font-weight: bold; }
+        .time-info { font-size: 11px; color: #666; margin-top: 4px; }
+        
+        /* Search & Filter */
+        .search-box { margin-bottom: 15px; }
+        .search-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        .filter-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-row select { padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+        
+        /* Next Departure */
+        .dep-selector { margin-bottom: 20px; }
+        .dep-selector label { font-weight: bold; color: #0B5D3B; }
+        .dep-selector select { padding: 10px; margin-left: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px; }
+        .next-departure { background: #e8f5e9; padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
+        .next-departure h3 { color: #0B5D3B; margin-bottom: 10px; }
+        .next-train { font-size: 24px; color: #11824A; font-weight: bold; }
+        .next-time { font-size: 18px; color: #0B5D3B; margin-top: 5px; }
+        
+        /* Quick Links */
+        .quick-links { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+        .quick-link { display: flex; align-items: center; gap: 8px; padding: 12px 20px; background: #f0f0f0; border-radius: 8px; text-decoration: none; color: #0B5D3B; font-weight: bold; transition: all 0.3s; }
+        .quick-link:hover { background: #0B5D3B; color: white; }
+        .quick-link span { font-size: 20px; }
+        
+        /* Info Box */
         .info-box { background: #e8f5e9; border-left: 4px solid #11824A; padding: 15px; margin-top: 20px; }
         .info-box h3 { color: #0B5D3B; margin-bottom: 10px; font-size: 16px; }
         .info-box ul { margin-left: 20px; font-size: 13px; }
         .info-box li { margin: 5px 0; }
-        .time-info { font-size: 11px; color: #666; margin-top: 4px; }
-        @media print { body { background: #fff; padding: 10px; } .section { border: 1px solid #ccc; box-shadow: none; } }
+        
+        /* Today Highlight */
+        .today-row { background: #fff3cd !important; }
+        .today-badge { background: #ffc107; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        
+        /* Print Button */
+        .print-btn { position: fixed; bottom: 20px; right: 20px; padding: 12px 20px; background: #0B5D3B; color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .print-btn:hover { background: #094a2e; }
+        
+        /* Favorites */
+        .fav-btn { background: none; border: none; cursor: pointer; font-size: 20px; }
+        .fav-btn:hover { transform: scale(1.2); }
+        
+        @media print { 
+            body { background: #fff; padding: 10px; } 
+            .section { border: 1px solid #ccc; box-shadow: none; display: block !important; }
+            .nav, .print-btn, .search-box, .filter-row { display: none !important; }
+            .quick-links { display: none !important; }
+        }
     </style>
 </head>
 <body>
     <h1>🚂 Bangladesh Railway - Official Timetable</h1>
-    <p style="text-align:center; color:#666; font-size:12px; margin-bottom:20px;">Source: Bangladesh Railway WTT-54 (Official) | Updated: October 2026</p>
-
-    <div class="section">
+    <p class="subtitle">Source: Bangladesh Railway WTT-54 (Official) | Updated: October 2026</p>
+    
+    <!-- Quick Links -->
+    <div class="quick-links">
+        <a href="https://railwayticket.bd" target="_blank" class="quick-link"><span>🎫</span> Book Ticket</a>
+        <a href="sms://16318?body=TR%20791" class="quick-link"><span>📍</span> Track Train</a>
+        <a href="tel:16318" class="quick-link"><span>📞</span> Helpline</a>
+        <a href="https://trainkothai.com" target="_blank" class="quick-link"><span>📊</span> Live Status</a>
+    </div>
+    
+    <!-- Navigation -->
+    <div class="nav">
+        <button class="nav-btn active" onclick="showSection('schedule')">7-Day Schedule</button>
+        <button class="nav-btn" onclick="showSection('next')">Next Departure</button>
+        <button class="nav-btn" onclick="showSection('station')">Station Lookup</button>
+        <button class="nav-btn" onclick="showSection('details')">All Details</button>
+    </div>
+    
+    <!-- 7-Day Schedule Section -->
+    <div id="schedule" class="section active">
         <h2>All Trains - 7 Day Schedule</h2>
+        <div class="search-box">
+            <input type="text" id="trainSearch" placeholder="🔍 Search train by name or number..." onkeyup="filterTrains()">
+        </div>
+        <div class="filter-row">
+            <select id="dayFilter" onchange="filterByDay()">
+                <option value="">All Days</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+            <select id="routeFilter" onchange="filterByRoute()">
+                <option value="">All Routes</option>
+                <option value="Dhaka">Dhaka Route</option>
+                <option value="Khulna">Khulna Route</option>
+                <option value="Chapai">Chapainawabganj Route</option>
+            </select>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -40,80 +131,75 @@
                     <th style="text-align:left; width:25%;">Route</th>
                     <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
                     <th>Off Day</th>
+                    <th>Fav</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="train-name">Banalata Express<br><span class="time-info">#791/792</span></td>
-                    <td class="route">Chapainawabganj ↔ Dhaka<br><span class="time-info">Stops: 4 only</span></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="off-day">Friday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Silkcity Express<br><span class="time-info">#753/754</span></td>
-                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Stops: 14</span></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td>
-                    <td class="off-day">Sunday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Padma Express<br><span class="time-info">#759/760</span></td>
-                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Overnight service</span></td>
-                    <td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="off-day">Tuesday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Dhumketu Express<br><span class="time-info">#769/770</span></td>
-                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Morning + Overnight</span></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="off-day">Thursday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Madhumati Express<br><span class="time-info">#755/756</span></td>
-                    <td class="route">Dhaka ↔ Rajshahi (via Faridpur)<br><span class="time-info">Stops: 23</span></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td>
-                    <td class="off-day">Saturday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Sagardari Express<br><span class="time-info">#761/762</span></td>
-                    <td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td>
-                    <td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="off-day">Monday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Kapotaksha Express<br><span class="time-info">#715/716</span></td>
-                    <td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="off-day">Friday</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Chapainawabganj Shuttle<br><span class="time-info">#109/110</span></td>
-                    <td class="route">Chapainawabganj ↔ Rajshahi<br><span class="time-info">Stops: 4</span></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="off-day">Thursday</td>
-                </tr>
+            <tbody id="trainTable">
+                <tr data-train="Banalata" data-num="791/792" data-route="Dhaka"><td class="train-name">Banalata Express<br><span class="time-info">#791/792</span></td><td class="route">Chapainawabganj ↔ Dhaka<br><span class="time-info">Stops: 4 only</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Friday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Silkcity" data-num="753/754" data-route="Dhaka"><td class="train-name">Silkcity Express<br><span class="time-info">#753/754</span></td><td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Stops: 14</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="off-day">Sunday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Padma" data-num="759/760" data-route="Dhaka"><td class="train-name">Padma Express<br><span class="time-info">#759/760</span></td><td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Overnight</span></td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Tuesday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Dhumketu" data-num="769/770" data-route="Dhaka"><td class="train-name">Dhumketu Express<br><span class="time-info">#769/770</span></td><td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Morning+Overnight</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Thursday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Madhumati" data-num="755/756" data-route="Dhaka"><td class="train-name">Madhumati Express<br><span class="time-info">#755/756</span></td><td class="route">Dhaka ↔ Rajshahi (via Faridpur)<br><span class="time-info">Stops: 23</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="off-day">Saturday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Sagardari" data-num="761/762" data-route="Khulna"><td class="train-name">Sagardari Express<br><span class="time-info">#761/762</span></td><td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Monday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Kapotaksha" data-num="715/716" data-route="Khulna"><td class="train-name">Kapotaksha Express<br><span class="time-info">#715/716</span></td><td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Friday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+                <tr data-train="Shuttle" data-num="109/110" data-route="Chapai"><td class="train-name">Chapainawabganj Shuttle<br><span class="time-info">#109/110</span></td><td class="route">Chapainawabganj ↔ Rajshahi<br><span class="time-info">Stops: 4</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Thursday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
             </tbody>
         </table>
     </div>
-
-    <div class="section">
-        <h2>All Stations on These Routes</h2>
+    
+    <!-- Next Departure Section -->
+    <div id="next" class="section">
+        <h2>🕐 Next Departure Calculator</h2>
+        <div class="dep-selector">
+            <label for="fromStation">From Station:</label>
+            <select id="fromStation" onchange="calculateNext()">
+                <option value="">-- Select Station --</option>
+                <option value="Dhaka">Dhaka (Kamalapur)</option>
+                <option value="Chapainawabganj">Chapainawabganj</option>
+                <option value="Rajshahi">Rajshahi</option>
+                <option value="Khulna">Khulna</option>
+                <option value="Ishwardi">Ishwardi Junction</option>
+                <option value="Abdulpur">Abdulpur</option>
+                <option value="AzimNagar">Azim Nagar</option>
+            </select>
+            <label for="toStation">To Station:</label>
+            <select id="toStation" onchange="calculateNext()">
+                <option value="">-- Select Station --</option>
+                <option value="Dhaka">Dhaka (Kamalapur)</option>
+                <option value="Chapainawabganj">Chapainawabganj</option>
+                <option value="Rajshahi">Rajshahi</option>
+                <option value="Khulna">Khulna</option>
+                <option value="Ishwardi">Ishwardi Junction</option>
+                <option value="Abdulpur">Abdulpur</option>
+                <option value="AzimNagar">Azim Nagar</option>
+            </select>
+        </div>
+        <div id="nextResult" class="next-departure">
+            <h3>Next Departures:</h3>
+            <div id="nextList"></div>
+        </div>
+    </div>
+    
+    <!-- Station Lookup Section -->
+    <div id="station" class="section">
+        <h2>🚉 Station Lookup</h2>
+        <div class="search-box">
+            <input type="text" id="stationSearch" placeholder="🔍 Search station..." onkeyup="filterStations()">
+        </div>
         <table>
             <thead>
                 <tr>
-                    <th>Station</th>
+                    <th style="text-align:left;">Station</th>
                     <th>Division</th>
-                    <th>Trains Stopping</th>
-                    <th>Notes</th>
+                    <th>Trains</th>
+                    <th>Details</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="stationTable">
                 <tr><td class="train-name">Dhaka (Kamalapur)</td><td>Dhaka</td><td>5</td><td>Major hub, all routes</td></tr>
                 <tr><td class="train-name">Dhaka Biman Bandar</td><td>Dhaka</td><td>3</td><td>Airport station</td></tr>
                 <tr><td class="train-name">Joydebpur</td><td>Dhaka</td><td>3</td><td>Interchange point</td></tr>
                 <tr><td class="train-name">Tangail</td><td>Tangail</td><td>3</td><td>Major junction</td></tr>
-                <tr><td class="train-name">Ullapara</td><td>Pabna</td><td>1</td><td>Silkcity only</td></tr>
-                <tr><td class="train-name">Bangabandhu Setu East</td><td>Pabna</td><td>1</td><td>Padma bridge side</td></tr>
-                <tr><td class="train-name">Shaheed M. Mansur Ali</td><td>Pabna</td><td>1</td><td>Padma only</td></tr>
                 <tr><td class="train-name">Ishwardi Junction</td><td>Pabna</td><td>7</td><td>Major junction, all trains</td></tr>
                 <tr><td class="train-name">Azim Nagar</td><td>Pabna</td><td>5</td><td>Regional stop</td></tr>
                 <tr><td class="train-name">Abdulpur</td><td>Pabna</td><td>6</td><td>Regional stop</td></tr>
@@ -124,14 +210,15 @@
                 <tr><td class="train-name">Bheramara</td><td>Kushtia</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
                 <tr><td class="train-name">Chuadanga</td><td>Chuadanga</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
                 <tr><td class="train-name">Jashore (Jessore)</td><td>Kushtia</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
-                <tr><td class="train-name">Faridpur</td><td>Faridpur</td><td>1</td><td>Madhumati only (southern route)</td></tr>
+                <tr><td class="train-name">Faridpur</td><td>Faridpur</td><td>1</td><td>Madhumati only</td></tr>
                 <tr><td class="train-name">Kushtia Court</td><td>Kushtia</td><td>1</td><td>Madhumati only</td></tr>
             </tbody>
         </table>
     </div>
-
-    <div class="section">
-        <h2>Train Details & Timing</h2>
+    
+    <!-- All Details Section -->
+    <div id="details" class="section">
+        <h2>📋 Complete Train Details</h2>
         <table>
             <thead>
                 <tr>
@@ -164,7 +251,7 @@
             </tbody>
         </table>
     </div>
-
+    
     <div class="info-box">
         <h3>📌 Important Information</h3>
         <ul>
@@ -175,9 +262,136 @@
             <li><strong>Note:</strong> Times are in Bangladesh Standard Time (BST, UTC+6)</li>
         </ul>
     </div>
-
+    
+    <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+    
     <div style="text-align:center; margin-top:30px; padding:20px; color:#666; font-size:11px; border-top:1px solid #ddd;">
-        <p>Personal Use Only | Last Verified: October 2026 | Sources: railway.gov.bd, jabenkothai.com, bdtraininfo.com</p>
+        <p>Personal Use Only | Last Verified: October 2026</p>
     </div>
+
+    <script>
+        // Section Navigation
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Search Trains
+        function filterTrains() {
+            const search = document.getElementById('trainSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#trainTable tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(search) ? '' : 'none';
+            });
+        }
+        
+        // Filter by Day
+        function filterByDay() {
+            const day = document.getElementById('dayFilter').value;
+            const dayIndex = {Monday:0, Tuesday:1, Wednesday:2, Thursday:3, Friday:4, Saturday:5, Sunday:6};
+            const rows = document.querySelectorAll('#trainTable tr');
+            rows.forEach(row => {
+                if (!day) { row.style.display = ''; return; }
+                const cells = row.querySelectorAll('td');
+                if (cells[dayIndex[day] + 2].classList.contains('run-yes')) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Filter by Route
+        function filterByRoute() {
+            const route = document.getElementById('routeFilter').value;
+            const rows = document.querySelectorAll('#trainTable tr');
+            rows.forEach(row => {
+                if (!route) { row.style.display = ''; return; }
+                const trainRoute = row.getAttribute('data-route');
+                row.style.display = trainRoute === route ? '' : 'none';
+            });
+        }
+        
+        // Next Departure Calculator
+        const trainData = [
+            {num:'792', from:'Chapainawabganj', to:'Dhaka', dep:'06:00', arr:'11:35', off:'Friday'},
+            {num:'791', from:'Dhaka', to:'Chapainawabganj', dep:'13:30', arr:'19:15', off:'Friday'},
+            {num:'754', from:'Rajshahi', to:'Dhaka', dep:'07:40', arr:'13:10', off:'Sunday'},
+            {num:'753', from:'Dhaka', to:'Rajshahi', dep:'14:30', arr:'20:20', off:'Sunday'},
+            {num:'760', from:'Rajshahi', to:'Dhaka', dep:'16:00', arr:'21:40', off:'Tuesday'},
+            {num:'759', from:'Dhaka', to:'Rajshahi', dep:'22:45', arr:'04:30', off:'Tuesday'},
+            {num:'769', from:'Dhaka', to:'Rajshahi', dep:'06:00', arr:'11:40', off:'Thursday'},
+            {num:'770', from:'Rajshahi', to:'Dhaka', dep:'23:20', arr:'04:40', off:'Thursday'},
+            {num:'756', from:'Rajshahi', to:'Dhaka', dep:'06:40', arr:'14:00', off:'Saturday'},
+            {num:'755', from:'Dhaka', to:'Rajshahi', dep:'15:00', arr:'22:30', off:'Saturday'},
+            {num:'762', from:'Rajshahi', to:'Khulna', dep:'06:00', arr:'12:10', off:'Monday'},
+            {num:'761', from:'Khulna', to:'Rajshahi', dep:'16:00', arr:'22:00', off:'Monday'},
+            {num:'715', from:'Khulna', to:'Rajshahi', dep:'06:45', arr:'12:20', off:'Friday'},
+            {num:'716', from:'Rajshahi', to:'Khulna', dep:'14:30', arr:'20:25', off:'Friday'},
+            {num:'110', from:'Chapainawabganj', to:'Rajshahi', dep:'14:15', arr:'15:40', off:'Thursday'},
+            {num:'109', from:'Rajshahi', to:'Chapainawabganj', dep:'10:35', arr:'11:50', off:'Thursday'}
+        ];
+        
+        function calculateNext() {
+            const from = document.getElementById('fromStation').value;
+            const to = document.getElementById('toStation').value;
+            const resultDiv = document.getElementById('nextResult');
+            const listDiv = document.getElementById('nextList');
+            
+            if (!from || !to) {
+                resultDiv.style.display = 'none';
+                return;
+            }
+            
+            const today = new Date().getDay();
+            const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            const todayName = dayNames[today];
+            
+            let results = trainData.filter(t => t.from === from && t.to === to && t.off !== todayName);
+            results.sort((a,b) => a.dep.localeCompare(b.dep));
+            
+            if (results.length === 0) {
+                listDiv.innerHTML = '<p>No trains found for this route.</p>';
+            } else {
+                listDiv.innerHTML = results.slice(0,3).map(t => `
+                    <div style="padding:10px; margin:5px 0; background:white; border-radius:4px;">
+                        <strong>Train #${t.num}</strong><br>
+                        ${t.from} → ${t.to}<br>
+                        Departs: ${t.dep} | Arrives: ${t.arr}
+                    </div>
+                `).join('');
+            }
+            resultDiv.style.display = 'block';
+        }
+        
+        // Station Search
+        function filterStations() {
+            const search = document.getElementById('stationSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#stationTable tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(search) ? '' : 'none';
+            });
+        }
+        
+        // Toggle Favorite
+        function toggleFav(btn) {
+            btn.textContent = btn.textContent === '⭐' ? '☆' : '⭐';
+        }
+        
+        // Highlight today's trains
+        const today = new Date().getDay();
+        const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        const todayName = dayNames[today];
+        document.querySelectorAll('#trainTable tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
+            if (cells[today+2] && cells[today+2].classList.contains('run-yes')) {
+                row.classList.add('today-row');
+            }
+        });
+    </script>
 </body>
 </html>

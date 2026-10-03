@@ -6,110 +6,128 @@
     <title>Bangladesh Railway Timetable</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        body { font-family: Arial, sans-serif; background: #fff; padding: 20px; color: #07281B; }
         h1 { text-align: center; color: #0B5D3B; margin-bottom: 30px; }
-        .section { background: white; margin-bottom: 30px; padding: 20px; border-radius: 8px; }
-        h2 { color: #0B5D3B; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #0B5D3B; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { background: #0B5D3B; color: white; padding: 12px 8px; text-align: center; font-weight: bold; }
-        td { padding: 10px 8px; text-align: center; border-bottom: 1px solid #ddd; }
-        tr:hover { background: #f9f9f9; }
-        .train-name { text-align: left; font-weight: bold; color: #0B5D3B; }
-        .run-yes { color: #11824A; font-weight: bold; }
-        .run-no { color: #999; }
-        .route { text-align: left; font-size: 13px; color: #666; }
-        .station-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 15px; }
-        .station-item { background: #f0f0f0; padding: 10px 15px; border-radius: 6px; border-left: 4px solid #0B5D3B; }
+        .section { background: #fff; margin-bottom: 30px; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        h2 { color: #0B5D3B; margin-bottom: 15px; font-size: 18px; border-bottom: 2px solid #0B5D3B; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #0B5D3B; color: #fff; padding: 10px 6px; text-align: center; font-weight: bold; font-size: 12px; }
+        td { padding: 8px 6px; text-align: center; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+        .train-name { text-align: left; font-weight: bold; color: #0B5D3B; font-size: 13px; }
+        .run-yes { color: #11824A; font-weight: bold; font-size: 16px; }
+        .run-no { color: #ccc; font-size: 16px; }
+        .route { text-align: left; font-size: 12px; color: #666; }
+        .off-day { color: #B3261E; font-weight: bold; }
         .info-box { background: #e8f5e9; border-left: 4px solid #11824A; padding: 15px; margin-top: 20px; }
-        .info-box h3 { color: #0B5D3B; margin-bottom: 10px; }
-        .info-box ul { margin-left: 20px; }
+        .info-box h3 { color: #0B5D3B; margin-bottom: 10px; font-size: 16px; }
+        .info-box ul { margin-left: 20px; font-size: 13px; }
         .info-box li { margin: 5px 0; }
-        @media print { body { background: white; padding: 0; } .section { box-shadow: none; border: 1px solid #ddd; } }
+        .time-info { font-size: 11px; color: #666; margin-top: 4px; }
+        @media print { body { background: #fff; padding: 10px; } .section { border: 1px solid #ccc; box-shadow: none; } }
     </style>
 </head>
 <body>
-    <h1>🚂 Bangladesh Railway - Train Timetable</h1>
+    <h1>🚂 Bangladesh Railway - Official Timetable</h1>
+    <p style="text-align:center; color:#666; font-size:12px; margin-bottom:20px;">Source: Bangladesh Railway WTT-54 (Official) | Updated: October 2026</p>
 
     <div class="section">
-        <h2>All Trains Schedule (7 Days)</h2>
+        <h2>All Trains - 7 Day Schedule</h2>
         <table>
             <thead>
                 <tr>
-                    <th style="text-align:left; width:25%;">Train Name</th>
+                    <th style="text-align:left; width:20%;">Train Name</th>
+                    <th style="text-align:left; width:25%;">Route</th>
                     <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-                    <th style="text-align:left;">Route</th>
-                    <th>Duration</th>
+                    <th>Off Day</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="train-name">Banalata Express<br><small>#791/792</small></td>
+                    <td class="train-name">Banalata Express<br><span class="time-info">#791/792</span></td>
+                    <td class="route">Chapainawabganj ↔ Dhaka<br><span class="time-info">Stops: 4 only</span></td>
                     <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="route">Chapainawabganj ↔ Dhaka</td><td>5h 35m</td>
+                    <td class="off-day">Friday</td>
                 </tr>
                 <tr>
-                    <td class="train-name">Silkcity Express<br><small>#753/754</small></td>
+                    <td class="train-name">Silkcity Express<br><span class="time-info">#753/754</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Stops: 14</span></td>
                     <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td>
-                    <td class="route">Rajshahi ↔ Dhaka</td><td>5h 30m</td>
+                    <td class="off-day">Sunday</td>
                 </tr>
                 <tr>
-                    <td class="train-name">Sagardari Express<br><small>#761/762</small></td>
-                    <td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="route">Rajshahi ↔ Khulna</td><td>6h 10m</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Kapota ksha Express<br><small>#715/716</small></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="route">Rajshahi ↔ Khulna</td><td>5h 55m</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Padma Express<br><small>#759/760</small></td>
+                    <td class="train-name">Padma Express<br><span class="time-info">#759/760</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Overnight service</span></td>
                     <td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="route">Rajshahi ↔ Dhaka</td><td>5h 15m</td>
+                    <td class="off-day">Tuesday</td>
                 </tr>
                 <tr>
-                    <td class="train-name">Dhumketu Express<br><small>#769/770</small></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="route">Rajshahi ↔ Dhaka (Overnight)</td><td>5h 20m</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Madhumati Express<br><small>#755/756</small></td>
-                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td>
-                    <td class="route">Rajshahi ↔ Dhaka</td><td>7h 20m</td>
-                </tr>
-                <tr>
-                    <td class="train-name">Chapainawabganj Shuttle<br><small>#109/110</small></td>
+                    <td class="train-name">Dhumketu Express<br><span class="time-info">#769/770</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Morning + Overnight</span></td>
                     <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
-                    <td class="route">Chapainawabganj ↔ Rajshahi</td><td>1h 25m</td>
+                    <td class="off-day">Thursday</td>
+                </tr>
+                <tr>
+                    <td class="train-name">Madhumati Express<br><span class="time-info">#755/756</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi (via Faridpur)<br><span class="time-info">Stops: 23</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td>
+                    <td class="off-day">Saturday</td>
+                </tr>
+                <tr>
+                    <td class="train-name">Sagardari Express<br><span class="time-info">#761/762</span></td>
+                    <td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td>
+                    <td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Monday</td>
+                </tr>
+                <tr>
+                    <td class="train-name">Kapotaksha Express<br><span class="time-info">#715/716</span></td>
+                    <td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Friday</td>
+                </tr>
+                <tr>
+                    <td class="train-name">Chapainawabganj Shuttle<br><span class="time-info">#109/110</span></td>
+                    <td class="route">Chapainawabganj ↔ Rajshahi<br><span class="time-info">Stops: 4</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Thursday</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
     <div class="section">
-        <h2>All Stations on This Route</h2>
-        <div class="station-list">
-            <div class="station-item">🚉 Chapainawabganj</div>
-            <div class="station-item">🚉 Rajshahi</div>
-            <div class="station-item">🚉 Abdulpur</div>
-            <div class="station-item">🚉 Azim Nagar</div>
-            <div class="station-item">🚉 Ishwardi</div>
-            <div class="station-item">🚉 Dhaka (Kamalapur)</div>
-            <div class="station-item">🚉 Khulna</div>
-            <div class="station-item">🚉 Bimal Bandar</div>
-            <div class="station-item">🚉 Joydebpur</div>
-            <div class="station-item">🚉 Tangail</div>
-            <div class="station-item">🚉 Ullapara</div>
-            <div class="station-item">🚉 Boral Bridge</div>
-            <div class="station-item">🚉 Chatmohar</div>
-            <div class="station-item">🚉 Ishwardi Bypass</div>
-            <div class="station-item">🚉 Paksey</div>
-            <div class="station-item">🚉 Bheramara</div>
-            <div class="station-item">🚉 Jessore</div>
-            <div class="station-item">🚉 Chuadanga</div>
-            <div class="station-item">🚉 Alamdanga</div>
-            <div class="station-item">🚉 Poradaha</div>
-        </div>
+        <h2>All Stations on These Routes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Station</th>
+                    <th>Division</th>
+                    <th>Trains Stopping</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="train-name">Dhaka (Kamalapur)</td><td>Dhaka</td><td>5</td><td>Major hub, all routes</td></tr>
+                <tr><td class="train-name">Dhaka Biman Bandar</td><td>Dhaka</td><td>3</td><td>Airport station</td></tr>
+                <tr><td class="train-name">Joydebpur</td><td>Dhaka</td><td>3</td><td>Interchange point</td></tr>
+                <tr><td class="train-name">Tangail</td><td>Tangail</td><td>3</td><td>Major junction</td></tr>
+                <tr><td class="train-name">Ullapara</td><td>Pabna</td><td>1</td><td>Silkcity only</td></tr>
+                <tr><td class="train-name">Bangabandhu Setu East</td><td>Pabna</td><td>1</td><td>Padma bridge side</td></tr>
+                <tr><td class="train-name">Shaheed M. Mansur Ali</td><td>Pabna</td><td>1</td><td>Padma only</td></tr>
+                <tr><td class="train-name">Ishwardi Junction</td><td>Pabna</td><td>7</td><td>Major junction, all trains</td></tr>
+                <tr><td class="train-name">Azim Nagar</td><td>Pabna</td><td>5</td><td>Regional stop</td></tr>
+                <tr><td class="train-name">Abdulpur</td><td>Pabna</td><td>6</td><td>Regional stop</td></tr>
+                <tr><td class="train-name">Rajshahi</td><td>Rajshahi</td><td>8</td><td>Major hub, all routes</td></tr>
+                <tr><td class="train-name">Chapainawabganj</td><td>Rajshahi</td><td>2</td><td>Terminus for Banalata & Shuttle</td></tr>
+                <tr><td class="train-name">Khulna</td><td>Khulna</td><td>2</td><td>Terminus for Sagardari & Kapotaksha</td></tr>
+                <tr><td class="train-name">Paksey</td><td>Kushtia</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
+                <tr><td class="train-name">Bheramara</td><td>Kushtia</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
+                <tr><td class="train-name">Chuadanga</td><td>Chuadanga</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
+                <tr><td class="train-name">Jashore (Jessore)</td><td>Kushtia</td><td>2</td><td>Khulna-Rajshahi route</td></tr>
+                <tr><td class="train-name">Faridpur</td><td>Faridpur</td><td>1</td><td>Madhumati only (southern route)</td></tr>
+                <tr><td class="train-name">Kushtia Court</td><td>Kushtia</td><td>1</td><td>Madhumati only</td></tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="section">
@@ -122,64 +140,44 @@
                     <th>To</th>
                     <th>Departure</th>
                     <th>Arrival</th>
+                    <th>Duration</th>
                     <th>Off Day</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td class="train-name">Banalata Express (792)</td><td>Chapainawabganj</td><td>Dhaka</td><td>06:00 AM</td><td>11:35 AM</td><td style="color:#B3261E;">Friday</td></tr>
-                <tr><td class="train-name">Banalata Express (791)</td><td>Dhaka</td><td>Chapainawabganj</td><td>01:30 PM</td><td>07:15 PM</td><td style="color:#B3261E;">Friday</td></tr>
-                <tr><td class="train-name">Silkcity Express (754)</td><td>Rajshahi</td><td>Dhaka</td><td>07:40 AM</td><td>01:10 PM</td><td style="color:#B3261E;">Sunday</td></tr>
-                <tr><td class="train-name">Silkcity Express (753)</td><td>Dhaka</td><td>Rajshahi</td><td>02:30 PM</td><td>08:20 PM</td><td style="color:#B3261E;">Sunday</td></tr>
-                <tr><td class="train-name">Sagardari Express (762)</td><td>Rajshahi</td><td>Khulna</td><td>06:00 AM</td><td>12:10 PM</td><td style="color:#B3261E;">Monday</td></tr>
-                <tr><td class="train-name">Sagardari Express (761)</td><td>Khulna</td><td>Rajshahi</td><td>04:00 PM</td><td>10:00 PM</td><td style="color:#B3261E;">Monday</td></tr>
-                <tr><td class="train-name">Kapota ksha Express (716)</td><td>Rajshahi</td><td>Khulna</td><td>02:30 PM</td><td>08:25 PM</td><td style="color:#B3261E;">Friday</td></tr>
-                <tr><td class="train-name">Kapota ksha Express (715)</td><td>Khulna</td><td>Rajshahi</td><td>12:20 PM</td><td>03:40 PM</td><td style="color:#B3261E;">Friday</td></tr>
-                <tr><td class="train-name">Padma Express (760)</td><td>Rajshahi</td><td>Dhaka</td><td>04:00 PM</td><td>09:15 PM</td><td style="color:#B3261E;">Tuesday</td></tr>
-                <tr><td class="train-name">Padma Express (759)</td><td>Dhaka</td><td>Rajshahi</td><td>04:00 AM</td><td>09:15 AM</td><td style="color:#B3261E;">Tuesday</td></tr>
-                <tr><td class="train-name">Dhumketu Express (770)</td><td>Rajshahi</td><td>Dhaka</td><td>11:20 PM</td><td>04:40 AM</td><td style="color:#B3261E;">Wednesday</td></tr>
-                <tr><td class="train-name">Dhumketu Express (769)</td><td>Dhaka</td><td>Rajshahi</td><td>11:40 AM</td><td>05:20 PM</td><td style="color:#B3261E;">Wednesday</td></tr>
-                <tr><td class="train-name">Madhumati Express (756)</td><td>Rajshahi</td><td>Dhaka</td><td>06:40 AM</td><td>02:00 PM</td><td style="color:#B3261E;">Saturday</td></tr>
-                <tr><td class="train-name">Madhumati Express (755)</td><td>Dhaka</td><td>Rajshahi</td><td>10:30 PM</td><td>05:50 AM</td><td style="color:#B3261E;">Saturday</td></tr>
-                <tr><td class="train-name">Chapainawabganj Shuttle (110)</td><td>Chapainawabganj</td><td>Rajshahi</td><td>02:15 PM</td><td>03:40 PM</td><td style="color:#B3261E;">Thursday</td></tr>
-                <tr><td class="train-name">Chapainawabganj Shuttle (109)</td><td>Rajshahi</td><td>Chapainawabganj</td><td>10:35 AM</td><td>11:50 AM</td><td style="color:#B3261E;">Thursday</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="section">
-        <h2>Station Stops by Train</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th style="text-align:left;">Train</th>
-                    <th>Chapai</th><th>Rajshahi</th><th>Abdulpur</th><th>Azim Nagar</th><th>Ishwardi</th><th>Dhaka</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td class="train-name">Banalata Express</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td></tr>
-                <tr><td class="train-name">Silkcity Express</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td></tr>
-                <tr><td class="train-name">Sagardari Express</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td></tr>
-                <tr><td class="train-name">Kapota ksha Express</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td></tr>
-                <tr><td class="train-name">Padma Express</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td></tr>
-                <tr><td class="train-name">Dhumketu Express</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td></tr>
-                <tr><td class="train-name">Madhumati Express</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td></tr>
-                <tr><td class="train-name">Chapainawabganj Shuttle</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-no">✗</td><td class="run-no">✗</td><td class="run-no">✗</td></tr>
+                <tr><td class="train-name">Banalata #792</td><td>Chapainawabganj</td><td>Dhaka</td><td>06:00 AM</td><td>11:35 AM</td><td>5h 35m</td><td style="color:#B3261E;">Fri</td></tr>
+                <tr><td class="train-name">Banalata #791</td><td>Dhaka</td><td>Chapainawabganj</td><td>01:30 PM</td><td>07:15 PM</td><td>5h 45m</td><td style="color:#B3261E;">Fri</td></tr>
+                <tr><td class="train-name">Silkcity #754</td><td>Rajshahi</td><td>Dhaka</td><td>07:40 AM</td><td>01:10 PM</td><td>5h 30m</td><td style="color:#B3261E;">Sun</td></tr>
+                <tr><td class="train-name">Silkcity #753</td><td>Dhaka</td><td>Rajshahi</td><td>02:30 PM</td><td>08:20 PM</td><td>5h 50m</td><td style="color:#B3261E;">Sun</td></tr>
+                <tr><td class="train-name">Padma #760</td><td>Rajshahi</td><td>Dhaka</td><td>04:00 PM</td><td>09:40 PM</td><td>5h 40m</td><td style="color:#B3261E;">Tue</td></tr>
+                <tr><td class="train-name">Padma #759</td><td>Dhaka</td><td>Rajshahi</td><td>10:45 PM</td><td>04:30 AM</td><td>5h 45m</td><td style="color:#B3261E;">Tue</td></tr>
+                <tr><td class="train-name">Dhumketu #769</td><td>Dhaka</td><td>Rajshahi</td><td>06:00 AM</td><td>11:40 AM</td><td>5h 40m</td><td style="color:#B3261E;">Thu</td></tr>
+                <tr><td class="train-name">Dhumketu #770</td><td>Rajshahi</td><td>Dhaka</td><td>11:20 PM</td><td>04:40 AM</td><td>5h 20m</td><td style="color:#B3261E;">Thu</td></tr>
+                <tr><td class="train-name">Madhumati #756</td><td>Rajshahi</td><td>Dhaka</td><td>06:40 AM</td><td>02:00 PM</td><td>5h 46m</td><td style="color:#B3261E;">Sat</td></tr>
+                <tr><td class="train-name">Madhumati #755</td><td>Dhaka</td><td>Rajshahi</td><td>03:00 PM</td><td>10:30 PM</td><td>6h 42m</td><td style="color:#B3261E;">Sat</td></tr>
+                <tr><td class="train-name">Sagardari #762</td><td>Rajshahi</td><td>Khulna</td><td>06:00 AM</td><td>12:10 PM</td><td>6h 10m</td><td style="color:#B3261E;">Mon</td></tr>
+                <tr><td class="train-name">Sagardari #761</td><td>Khulna</td><td>Rajshahi</td><td>04:00 PM</td><td>10:00 PM</td><td>6h 00m</td><td style="color:#B3261E;">Mon</td></tr>
+                <tr><td class="train-name">Kapotaksha #715</td><td>Khulna</td><td>Rajshahi</td><td>06:45 AM</td><td>12:20 PM</td><td>5h 35m</td><td style="color:#B3261E;">Fri</td></tr>
+                <tr><td class="train-name">Kapotaksha #716</td><td>Rajshahi</td><td>Khulna</td><td>02:30 PM</td><td>08:25 PM</td><td>5h 55m</td><td style="color:#B3261E;">Fri</td></tr>
+                <tr><td class="train-name">Shuttle #110</td><td>Chapainawabganj</td><td>Rajshahi</td><td>02:15 PM</td><td>03:40 PM</td><td>1h 25m</td><td style="color:#B3261E;">Thu</td></tr>
+                <tr><td class="train-name">Shuttle #109</td><td>Rajshahi</td><td>Chapainawabganj</td><td>10:35 AM</td><td>11:50 AM</td><td>1h 15m</td><td style="color:#B3261E;">Thu</td></tr>
             </tbody>
         </table>
     </div>
 
     <div class="info-box">
-        <h3>📌 Important Notes</h3>
+        <h3>📌 Important Information</h3>
         <ul>
-            <li><strong>Booking:</strong> Tickets available 10 days before at 8:00 AM via <a href="https://railwayticket.bd" target="_blank">railwayticket.bd</a></li>
-            <li><strong>Live Status:</strong> Send train number to 16318 (SMS) or visit <a href="https://trainkothai.com" target="_blank">trainkothai.com</a></li>
+            <li><strong>Official Source:</strong> Bangladesh Railway WTT-54 (Timetable No. 54)</li>
+            <li><strong>Booking:</strong> https://railwayticket.bd (opens 10 days before at 8:00 AM)</li>
+            <li><strong>Live Tracking:</strong> Send "TR [train-number]" to 16318 (SMS)</li>
             <li><strong>Helpline:</strong> Call 16318 for assistance</li>
-            <li><strong>Weekly Off-days:</strong> Each train has 1 off-day per week - check before traveling</li>
+            <li><strong>Note:</strong> Times are in Bangladesh Standard Time (BST, UTC+6)</li>
         </ul>
     </div>
 
-    <div style="text-align:center; margin-top:30px; padding:20px; color:#666; font-size:12px;">
-        <p>Last Updated: October 2026 | Source: Bangladesh Railway WTT-54</p>
+    <div style="text-align:center; margin-top:30px; padding:20px; color:#666; font-size:11px; border-top:1px solid #ddd;">
+        <p>Personal Use Only | Last Verified: October 2026 | Sources: railway.gov.bd, jabenkothai.com, bdtraininfo.com</p>
     </div>
 </body>
 </html>

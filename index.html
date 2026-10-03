@@ -128,22 +128,97 @@
         <table>
             <thead>
                 <tr>
-                    <th style="text-align:left; width:20%;">Train Name</th>
-                    <th style="text-align:left; width:25%;">Route</th>
+                    <th style="text-align:left; width:15%;">Train Name</th>
+                    <th style="text-align:left; width:18%;">Route</th>
                     <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-                    <th>Off Day</th>
+                    <th style="width:10%;">Off Day</th>
+                    <th style="width:8%;">Duration</th>
+                    <th style="width:10%;">First Dep</th>
+                    <th style="width:10%;">Last Arr</th>
                     <th>Fav</th>
                 </tr>
             </thead>
-            <tbody id="trainTable">
-                <tr data-train="Banalata" data-num="791/792" data-route="Dhaka"><td class="train-name">Banalata Express<br><span class="time-info">#791/792</span></td><td class="route">Chapainawabganj ↔ Dhaka<br><span class="time-info">Stops: 4 only</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Friday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Silkcity" data-num="753/754" data-route="Dhaka"><td class="train-name">Silkcity Express<br><span class="time-info">#753/754</span></td><td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Stops: 14</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="off-day">Sunday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Padma" data-num="759/760" data-route="Dhaka"><td class="train-name">Padma Express<br><span class="time-info">#759/760</span></td><td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Overnight</span></td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Tuesday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Dhumketu" data-num="769/770" data-route="Dhaka"><td class="train-name">Dhumketu Express<br><span class="time-info">#769/770</span></td><td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Morning+Overnight</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Thursday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Madhumati" data-num="755/756" data-route="Dhaka"><td class="train-name">Madhumati Express<br><span class="time-info">#755/756</span></td><td class="route">Dhaka ↔ Rajshahi (via Faridpur)<br><span class="time-info">Stops: 23</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="off-day">Saturday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Sagardari" data-num="761/762" data-route="Khulna"><td class="train-name">Sagardari Express<br><span class="time-info">#761/762</span></td><td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Monday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Kapotaksha" data-num="715/716" data-route="Khulna"><td class="train-name">Kapotaksha Express<br><span class="time-info">#715/716</span></td><td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Friday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
-                <tr data-train="Shuttle" data-num="109/110" data-route="Chapai"><td class="train-name">Chapainawabganj Shuttle<br><span class="time-info">#109/110</span></td><td class="route">Chapainawabganj ↔ Rajshahi<br><span class="time-info">Stops: 4</span></td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="off-day">Thursday</td><td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td></tr>
+            <tbody>
+                <tr data-train="Banalata" data-num="791/792" data-route="Dhaka">
+                    <td class="train-name">Banalata Express<br><span class="time-info">#791/792</span></td>
+                    <td class="route">Chapainawabganj ↔ Dhaka<br><span class="time-info">Stops: 4</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Friday</td>
+                    <td>5h 35m</td>
+                    <td>06:00<br><small>Chapai</small></td>
+                    <td>19:15<br><small>Chapai</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Silkcity" data-num="753/754" data-route="Dhaka">
+                    <td class="train-name">Silkcity Express<br><span class="time-info">#753/754</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Stops: 14</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td>
+                    <td class="off-day">Sunday</td>
+                    <td>5h 30m</td>
+                    <td>07:40<br><small>Rajshahi</small></td>
+                    <td>20:20<br><small>Rajshahi</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Padma" data-num="759/760" data-route="Dhaka">
+                    <td class="train-name">Padma Express<br><span class="time-info">#759/760</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Overnight</span></td>
+                    <td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Tuesday</td>
+                    <td>5h 40m</td>
+                    <td>22:45<br><small>Dhaka</small></td>
+                    <td>04:30<br><small>Rajshahi</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Dhumketu" data-num="769/770" data-route="Dhaka">
+                    <td class="train-name">Dhumketu Express<br><span class="time-info">#769/770</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi<br><span class="time-info">Morning+Overnight</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Thursday</td>
+                    <td>5h 20m</td>
+                    <td>06:00<br><small>Dhaka</small></td>
+                    <td>04:40<br><small>Dhaka</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Madhumati" data-num="755/756" data-route="Dhaka">
+                    <td class="train-name">Madhumati Express<br><span class="time-info">#755/756</span></td>
+                    <td class="route">Dhaka ↔ Rajshahi (via Faridpur)<br><span class="time-info">Stops: 23</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td>
+                    <td class="off-day">Saturday</td>
+                    <td>6h 42m</td>
+                    <td>15:00<br><small>Dhaka</small></td>
+                    <td>22:30<br><small>Rajshahi</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Sagardari" data-num="761/762" data-route="Khulna">
+                    <td class="train-name">Sagardari Express<br><span class="time-info">#761/762</span></td>
+                    <td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td>
+                    <td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Monday</td>
+                    <td>6h 10m</td>
+                    <td>06:00<br><small>Rajshahi</small></td>
+                    <td>22:00<br><small>Rajshahi</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Kapotaksha" data-num="715/716" data-route="Khulna">
+                    <td class="train-name">Kapotaksha Express<br><span class="time-info">#715/716</span></td>
+                    <td class="route">Khulna ↔ Rajshahi<br><span class="time-info">Stops: 17</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Friday</td>
+                    <td>5h 35m</td>
+                    <td>06:45<br><small>Khulna</small></td>
+                    <td>20:25<br><small>Khulna</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
+                <tr data-train="Shuttle" data-num="109/110" data-route="Chapai">
+                    <td class="train-name">Chapainawabganj Shuttle<br><span class="time-info">#109/110</span></td>
+                    <td class="route">Chapainawabganj ↔ Rajshahi<br><span class="time-info">Stops: 4</span></td>
+                    <td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-no">✗</td><td class="run-yes">✓</td><td class="run-yes">✓</td><td class="run-yes">✓</td>
+                    <td class="off-day">Thursday</td>
+                    <td>1h 25m</td>
+                    <td>14:15<br><small>Chapai</small></td>
+                    <td>11:50<br><small>Chapai</small></td>
+                    <td><button class="fav-btn" onclick="toggleFav(this)">⭐</button></td>
+                </tr>
             </tbody>
         </table>
     </div>
